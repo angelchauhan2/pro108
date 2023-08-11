@@ -14,7 +14,7 @@ while True:
     img = cv2.flip(img, 1)
     h,w,c = img.shape
     results = hands.process(img)
-
+    finger_fold_status=[]
 
     if results.multi_hand_landmarks:
         for hand_landmark in results.multi_hand_landmarks:
@@ -26,12 +26,12 @@ while True:
              #Code goes here   
             for tip in finger_tips:
                 x,y=int(lm_list[tip].x*w), int(lm_list[tip].y*h)
-                cv2.cicle(img,(x,y),15,(255,0,0), cv2.FILLED)   
-                if lm_list[tip.x] < lm_list[tip-3].x:
+                cv2.circle(img,(x,y),15,(255,0,0), cv2.FILLED)   
+                if lm_list[tip].x < lm_list[tip-3].x:
                     cv2.circle(img,(x,y),15,(0,255,0),cv2.FILLED)     
                     finger_fold_status.append(True)
                 else:
-                finger_fold_status.append(False)
+                    finger_fold_status.append(False)
 
 
             mp_draw.draw_landmarks(img, hand_landmark,
